@@ -4,89 +4,79 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prokletý hrad Varkhán</title>
+<title>Prokletý hrad Varkhán - Kapitola 1</title>
 
 <style>
 
-* {
-    box-sizing: border-box;
-}
-
 body {
-    margin: 0;
-    background: #0b0b0f;
-    color: #ddd;
-    font-family: Georgia, serif;
+    margin:0;
+    background:#090a0f;
+    color:#ddd;
+    font-family:Georgia, serif;
 }
 
 .game {
-    max-width: 800px;
-    margin: auto;
-    min-height: 100vh;
-    background: #15151c;
+    max-width:800px;
+    margin:auto;
+    min-height:100vh;
+    background:#151821;
 }
 
 header {
-    padding: 20px;
-    text-align: center;
-    border-bottom: 1px solid #444;
+    text-align:center;
+    padding:20px;
+    border-bottom:1px solid #444;
 }
 
 h1 {
-    margin: 0;
-    color: #c8a45d;
-    font-size: 28px;
+    color:#d1aa58;
 }
 
 .scene {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 110px;
+    height:280px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:100px;
     background:
-        radial-gradient(circle at center, #30303a, #09090c);
-    border-bottom: 1px solid #444;
+    radial-gradient(circle,#343642,#08090c);
 }
 
 .content {
-    padding: 25px;
+    padding:25px;
 }
 
 #location {
-    color: #c8a45d;
-    font-size: 20px;
-    margin-bottom: 15px;
+    color:#d1aa58;
+    font-size:22px;
 }
 
 #story {
-    font-size: 18px;
-    line-height: 1.7;
-    min-height: 150px;
+    line-height:1.7;
+    font-size:18px;
+    min-height:150px;
 }
 
-.choice {
-    display: block;
-    width: 100%;
-    margin: 12px 0;
-    padding: 16px;
-    background: #24242d;
-    border: 1px solid #75603b;
-    color: #eee;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 6px;
+button {
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    background:#252936;
+    color:white;
+    border:1px solid #80652f;
+    border-radius:5px;
+    font-size:16px;
 }
 
-.choice:hover {
-    background: #353540;
+button:hover {
+    background:#3a3f50;
 }
 
 #inventory {
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid #333;
-    color: #aaa;
+    margin-top:20px;
+    border-top:1px solid #444;
+    padding-top:15px;
+    color:#d1aa58;
 }
 
 </style>
@@ -97,276 +87,216 @@ h1 {
 <div class="game">
 
 <header>
-    <h1>🏰 Prokletý hrad Varkhán</h1>
+<h1>🏰 Prokletý hrad Varkhán</h1>
 </header>
 
-<div id="scene" class="scene">
-    🏰
-</div>
+<div class="scene" id="image">🏰</div>
 
 <div class="content">
 
-    <div id="location"></div>
+<div id="location"></div>
 
-    <div id="story"></div>
+<div id="story"></div>
 
-    <div id="choices"></div>
+<div id="choices"></div>
 
-    <div id="inventory">
-        Inventář: prázdný
-    </div>
+<div id="inventory"></div>
 
 </div>
-
 </div>
 
 
 <script>
 
-let currentRoom = "hall";
+let room="gate";
 
-let inventory = [];
+let inventory=[];
 
 
-function showRoom() {
+function has(item){
+return inventory.includes(item);
+}
 
-    const location = document.getElementById("location");
-    const story = document.getElementById("story");
-    const choices = document.getElementById("choices");
-    const scene = document.getElementById("scene");
 
-    choices.innerHTML = "";
+function add(item){
+if(!has(item)){
+inventory.push(item);
+}
+}
 
 
-    // =========================
-    // MÍSTNOST 1
-    // =========================
+function updateInventory(){
 
-    if (currentRoom === "hall") {
-
-        location.textContent = "Vstupní hala";
-
-        scene.textContent = "🏰";
-
-        story.innerHTML = `
-        Déšť bubnuje do vysokých oken starého hradu.
-
-        Stojíš uprostřed vstupní haly. Před tebou je
-        obrovské schodiště vedoucí do horních pater.
-
-        Vlevo stojí starý dřevěný stůl.
-        Vpravo jsou těžké dveře, ze kterých uniká
-        slabé světlo.
-
-        Odněkud z hlubin hradu se ozve kovové
-        <b>zvonění</b>.
-        `;
-
-
-        addChoice(
-            "Prozkoumat starý stůl",
-            () => {
-
-                if (!inventory.includes("🔑 Rezavý klíč")) {
-
-                    inventory.push("🔑 Rezavý klíč");
-
-                    story.innerHTML = `
-                    Pod vrstvou prachu objevíš malou
-                    železnou schránku.
-
-                    Je odemčená.
-
-                    Uvnitř leží <b>rezavý klíč</b>.
-
-                    Klíč si schováš do kapsy.
-                    `;
-
-                    updateInventory();
-
-                } else {
-
-                    story.innerHTML = `
-                    Stůl už jsi prohledal.
-                    Nic dalšího zde není.
-                    `;
-                }
-
-            }
-        );
-
-
-        addChoice(
-            "Otevřít dveře se světlem",
-            () => {
-
-                currentRoom = "corridor";
-
-                showRoom();
-
-            }
-        );
-
-
-        addChoice(
-            "Prozkoumat schodiště",
-            () => {
-
-                story.innerHTML = `
-                Uděláš několik kroků ke schodišti.
-
-                Z horního patra se ozve tiché:
-
-                <i>„Ještě ne..."</i>
-
-                Raději se vrátíš.
-                `;
-
-            }
-        );
-
-    }
-
-
-    // =========================
-    // MÍSTNOST 2
-    // =========================
-
-    if (currentRoom === "corridor") {
-
-        location.textContent = "Tajemná chodba";
-
-        scene.textContent = "🕯️";
-
-        story.innerHTML = `
-        Dveře za tebou se tiše zavřou.
-
-        Nacházíš se v úzké kamenné chodbě.
-
-        Po stěnách visí staré obrazy mužů,
-        kteří kdysi obývali tento hrad.
-
-        Na konci chodby stojí velké železné dveře.
-
-        Vedle nich je malá kamenná socha.
-        `;
-
-
-        addChoice(
-            "Prozkoumat sochu",
-            () => {
-
-                story.innerHTML = `
-                Socha představuje rytíře
-                s mečem v ruce.
-
-                Když se jí dotkneš, jeho oči
-                na okamžik slabě zazáří.
-
-                Na podstavci objevíš nápis:
-
-                <br><br>
-
-                <i>
-                „Pouze ten, kdo zná cestu,
-                může otevřít bránu."
-                </i>
-                `;
-
-            }
-        );
-
-
-        addChoice(
-            "Otevřít železné dveře",
-            () => {
-
-                if (inventory.includes("🔑 Rezavý klíč")) {
-
-                    story.innerHTML = `
-                    Vytáhneš rezavý klíč.
-
-                    Překvapivě přesně zapadne do zámku.
-
-                    <br><br>
-
-                    <b>CVAK.</b>
-
-                    Dveře se pomalu otevřou.
-
-                    Za nimi je schodiště vedoucí
-                    hluboko pod hrad.
-
-                    <br><br>
-
-                    <b>
-                    Toto je konec prvního dema.
-                    Podzemí bychom mohli přidat jako
-                    třetí část dobrodružství.
-                    </b>
-                    `;
-
-                } else {
-
-                    story.innerHTML = `
-                    Zkusíš dveře otevřít.
-
-                    Ani se nepohnou.
-
-                    Potřebuješ nějaký klíč.
-                    `;
-
-                }
-
-            }
-        );
-
-
-        addChoice(
-            "Vrátit se do vstupní haly",
-            () => {
-
-                currentRoom = "hall";
-
-                showRoom();
-
-            }
-        );
-
-    }
+document.getElementById("inventory").innerHTML =
+"Inventář: " +
+(inventory.length ? inventory.join(" | ") : "prázdný");
 
 }
 
 
-function addChoice(text, action) {
+function button(text,func){
 
-    const button = document.createElement("button");
+let b=document.createElement("button");
 
-    button.className = "choice";
+b.innerHTML=text;
 
-    button.textContent = text;
+b.onclick=func;
 
-    button.onclick = action;
-
-    document.getElementById("choices").appendChild(button);
+document.getElementById("choices").appendChild(b);
 
 }
 
 
-function updateInventory() {
+function move(place){
 
-    document.getElementById("inventory").textContent =
-        "Inventář: " +
-        (inventory.length
-            ? inventory.join(" | ")
-            : "prázdný");
+room=place;
+
+show();
 
 }
 
 
-showRoom();
+function show(){
+
+let title="";
+let story="";
+let icon="🏰";
+
+
+document.getElementById("choices").innerHTML="";
+
+
+
+if(room=="gate"){
+
+title="Brána hradu";
+
+icon="🏰";
+
+story=`
+Po dlouhé cestě stojíš před hradem Varkhán.
+
+Místní lidé tvrdí, že v něm před sto lety zmizel celý rod.
+
+Brána se sama pomalu otevře.
+
+`;
+
+button("Vstoupit do hradu",()=>move("hall"));
+
+}
+
+
+
+if(room=="hall"){
+
+title="Vstupní hala";
+
+icon="🕯️";
+
+story=`
+Velký sál je pokrytý prachem.
+
+Na stole leží stará železná schránka.
+
+Vpravo vidíš dveře do knihovny.
+Vlevo vede chodba k pokojům.
+
+`;
+
+button("Otevřít schránku",()=>{
+
+add("🔑 Rezavý klíč");
+
+story="Ve schránce najdeš rezavý klíč.";
+
+render(title,story,icon);
+
+});
+
+
+button("Jít do knihovny",()=>move("library"));
+
+button("Prozkoumat pokoje",()=>move("room"));
+
+}
+
+
+
+if(room=="library"){
+
+title="Starobylá knihovna";
+
+icon="📚";
+
+story=`
+Tisíce knih pokrývají stěny.
+
+Jedna kniha je vytažená.
+
+Za ní se skrývá malý otvor ve zdi.
+
+`;
+
+button("Prozkoumat otvor",()=>move("secret"));
+
+button("Vrátit se",()=>move("hall"));
+
+}
+
+
+
+if(room=="room"){
+
+title="Zapomenutý pokoj";
+
+icon="🛏️";
+
+story=`
+Na stole leží starý deník.
+
+Poslední zápis končí větou:
+
+"Strážce pod hradem se probudí, až někdo najde klíč."
+
+`;
+
+button("Vzít deník",()=>{
+
+add("📖 Deník");
+
+render(title,
+"Deník sis uložil. Možná obsahuje důležité informace.",
+icon);
+
+});
+
+button("Vrátit se",()=>move("hall"));
+
+}
+
+
+render(title,story,icon);
+
+}
+
+
+function render(title,story,icon){
+
+document.getElementById("location").innerHTML=title;
+
+document.getElementById("story").innerHTML=story;
+
+document.getElementById("image").innerHTML=icon;
+
+updateInventory();
+
+}
+show();
 
 </script>
 
 </body>
 </html>
+
+>
