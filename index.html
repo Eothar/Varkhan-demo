@@ -4,82 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prokletý hrad Varkhán - Kapitola 1</title>
+<title>Prokletý hrad Varkhán</title>
 
 <style>
-
-body {
+body{
     margin:0;
     background:#090a0f;
     color:#ddd;
-    font-family:Georgia, serif;
+    font-family:Georgia,serif;
 }
 
-.game {
+.game{
     max-width:800px;
     margin:auto;
     min-height:100vh;
     background:#151821;
 }
 
-header {
+header{
     text-align:center;
     padding:20px;
     border-bottom:1px solid #444;
 }
 
-h1 {
+h1{
     color:#d1aa58;
 }
 
-.scene {
-    height:280px;
+.scene{
+    height:260px;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     font-size:100px;
-    background:
-    radial-gradient(circle,#343642,#08090c);
+    background:#08090c;
 }
 
-.content {
-    padding:25px;
+.content{
+    padding:20px;
 }
 
-#location {
+#location{
     color:#d1aa58;
-    font-size:22px;
+    font-size:24px;
 }
 
-#story {
+#story{
     line-height:1.7;
     font-size:18px;
     min-height:150px;
 }
 
-button {
+button{
     width:100%;
     padding:15px;
-    margin:10px 0;
+    margin:8px 0;
     background:#252936;
     color:white;
     border:1px solid #80652f;
     border-radius:5px;
-    font-size:16px;
 }
 
-button:hover {
-    background:#3a3f50;
-}
-
-#inventory {
+#inventory{
     margin-top:20px;
-    border-top:1px solid #444;
     padding-top:15px;
+    border-top:1px solid #444;
     color:#d1aa58;
 }
-
 </style>
+
 </head>
 
 <body>
@@ -90,7 +83,7 @@ button:hover {
 <h1>🏰 Prokletý hrad Varkhán</h1>
 </header>
 
-<div class="scene" id="image">🏰</div>
+<div id="image" class="scene">🏰</div>
 
 <div class="content">
 
@@ -103,6 +96,7 @@ button:hover {
 <div id="inventory"></div>
 
 </div>
+
 </div>
 
 
@@ -111,6 +105,8 @@ button:hover {
 let room="gate";
 
 let inventory=[];
+
+let hp=100;
 
 
 function has(item){
@@ -125,22 +121,13 @@ inventory.push(item);
 }
 
 
-function updateInventory(){
-
-document.getElementById("inventory").innerHTML =
-"Inventář: " +
-(inventory.length ? inventory.join(" | ") : "prázdný");
-
-}
-
-
-function button(text,func){
+function choice(text,action){
 
 let b=document.createElement("button");
 
 b.innerHTML=text;
 
-b.onclick=func;
+b.onclick=action;
 
 document.getElementById("choices").appendChild(b);
 
@@ -156,14 +143,39 @@ show();
 }
 
 
+function update(){
+
+document.getElementById("inventory").innerHTML=
+"🎒 Inventář: "+
+(inventory.length ? inventory.join(", ") : "prázdný")+
+"<br>❤️ Životy: "+hp;
+
+}
+
+
+
+function render(title,text,img){
+
+document.getElementById("location").innerHTML=title;
+
+document.getElementById("story").innerHTML=text;
+
+document.getElementById("image").innerHTML=img;
+
+update();
+
+}
+
+
+
 function show(){
 
-let title="";
-let story="";
-let icon="🏰";
-
-
 document.getElementById("choices").innerHTML="";
+
+
+let title="";
+let text="";
+let img="🏰";
 
 
 
@@ -171,18 +183,17 @@ if(room=="gate"){
 
 title="Brána hradu";
 
-icon="🏰";
+text=`
+Po hodinách cesty stojíš před hradem Varkhán.
 
-story=`
-Po dlouhé cestě stojíš před hradem Varkhán.
+Nikdo netuší, co se skrývá uvnitř.
 
-Místní lidé tvrdí, že v něm před sto lety zmizel celý rod.
-
-Brána se sama pomalu otevře.
+Brána se pomalu otevírá sama.
 
 `;
 
-button("Vstoupit do hradu",()=>move("hall"));
+choice("Vstoupit do hradu",
+()=>move("hall"));
 
 }
 
@@ -192,111 +203,335 @@ if(room=="hall"){
 
 title="Vstupní hala";
 
-icon="🕯️";
+img="🕯️";
 
-story=`
-Velký sál je pokrytý prachem.
+text=`
+Starý sál je pokrytý prachem.
 
-Na stole leží stará železná schránka.
+Na stole leží železná schránka.
 
-Vpravo vidíš dveře do knihovny.
-Vlevo vede chodba k pokojům.
-
+V dálce slyšíš podivný zvuk.
 `;
 
-button("Otevřít schránku",()=>{
+choice("Otevřít schránku",
+()=>{
 
 add("🔑 Rezavý klíč");
 
-story="Ve schránce najdeš rezavý klíč.";
-
-render(title,story,icon);
+render(
+"Vstupní hala",
+"Ve schránce nacházíš rezavý klíč.",
+"🕯️"
+);
 
 });
 
 
-button("Jít do knihovny",()=>move("library"));
+choice("Jít do knihovny",
+()=>move("library"));
 
-button("Prozkoumat pokoje",()=>move("room"));
+choice("Jít do pokoje",
+()=>move("room"));
+
+choice("Sestoupit dolů",
+()=>move("door"));
 
 }
-
 
 
 if(room=="library"){
 
-title="Starobylá knihovna";
+title="Knihovna";
 
-icon="📚";
+img="📚";
 
-story=`
-Tisíce knih pokrývají stěny.
+text=`
+Mezi tisíci knihami najdeš starý svitek.
 
-Jedna kniha je vytažená.
+Píše se v něm:
 
-Za ní se skrývá malý otvor ve zdi.
-
+"Pouze světlo otevře cestu do hlubin."
 `;
 
-button("Prozkoumat otvor",()=>move("secret"));
+choice("Vzít svitek",
+()=>{
 
-button("Vrátit se",()=>move("hall"));
+add("📜 Svitek");
+
+render(
+"Knihovna",
+"Získal jsi starý svitek.",
+"📚"
+);
+
+});
+
+choice("Zpět",
+()=>move("hall"));
 
 }
-
 
 
 if(room=="room"){
 
-title="Zapomenutý pokoj";
+title="Starý pokoj";
 
-icon="🛏️";
+img="🛏️";
 
-story=`
-Na stole leží starý deník.
+text=`
+Na stole leží stará pochodeň.
 
-Poslední zápis končí větou:
-
-"Strážce pod hradem se probudí, až někdo najde klíč."
-
+Ve tmě pod hradem může být užitečná.
 `;
 
-button("Vzít deník",()=>{
+choice("Vzít pochodeň",
+()=>{
 
-add("📖 Deník");
+add("🔥 Pochodeň");
 
-render(title,
-"Deník sis uložil. Možná obsahuje důležité informace.",
-icon);
+render(
+"Starý pokoj",
+"Získal jsi pochodeň.",
+"🛏️"
+);
 
 });
 
-button("Vrátit se",()=>move("hall"));
+choice("Zpět",
+()=>move("hall"));
+
+}
+if(room=="door"){
+
+title="Kamenné dveře do sklepení";
+
+img="⛓️";
+
+text=`
+Před tebou jsou obrovské kamenné dveře.
+
+Na zámku je znak starého rodu Varkhánů.
+
+Zdá se, že potřebuješ klíč.
+`;
+
+if(has("🔑 Rezavý klíč")){
+
+choice("Použít rezavý klíč",
+()=>move("basement"));
+
+}else{
+
+text+=`
+<br><br>
+Dveře se ani nepohnou.
+`;
+
+}
+
+choice("Vrátit se",
+()=>move("hall"));
 
 }
 
 
-render(title,story,icon);
+
+if(room=="basement"){
+
+title="Staré sklepení";
+
+img="⛓️";
+
+text=`
+Scházíš hluboko pod hrad.
+
+Vzduch je chladný.
+
+Na stěně vidíš starý držák na pochodeň.
+
+`;
+
+if(has("🔥 Pochodeň")){
+
+choice("Zapálit pochodeň",
+()=>move("catacombs"));
+
+}else{
+
+text+=`
+<br>
+Je zde příliš velká tma.
+Potřebuješ světlo.
+`;
 
 }
 
 
-function render(title,story,icon){
-
-document.getElementById("location").innerHTML=title;
-
-document.getElementById("story").innerHTML=story;
-
-document.getElementById("image").innerHTML=icon;
-
-updateInventory();
+choice("Vrátit se",
+()=>move("hall"));
 
 }
+
+
+
+if(room=="catacombs"){
+
+title="Katakomby";
+
+img="💀";
+
+text=`
+Pod hradem se nachází staré katakomby.
+
+Kosti dávných strážců leží kolem chodby.
+
+Najednou se před tebou objeví přízračný rytíř.
+`;
+
+choice("Postavit se strážci",
+()=>move("guardian"));
+
+}
+
+
+
+if(room=="guardian"){
+
+title="Strážce hradu";
+
+img="⚔️";
+
+text=`
+Rytíř zvedne svůj meč.
+
+"Pouze ten, kdo našel cestu do hlubin,
+může pokračovat."
+
+`;
+
+choice("Bojovat",
+()=>{
+
+hp-=30;
+
+if(hp<=0){
+
+move("dead");
+
+}else{
+
+move("treasure");
+
+}
+
+});
+
+}
+
+
+
+if(room=="treasure"){
+
+title="Pokladnice";
+
+img="💎";
+
+text=`
+Za strážcem nacházíš starou komnatu.
+
+Uprostřed stojí truhla.
+
+Uvnitř není zlato...
+
+ale koruna posledního pána hradu.
+
+Kletba je zlomena.
+
+`;
+
+add("👑 Koruna Varkhánu");
+
+
+choice(
+"Dokončit dobrodružství",
+()=>move("end")
+);
+
+}
+
+
+
+if(room=="dead"){
+
+title="Konec";
+
+img="☠️";
+
+text=`
+Strážce byl příliš silný.
+
+Tvé dobrodružství zde končí.
+
+`;
+
+choice(
+"Začít znovu",
+()=>{
+
+room="gate";
+inventory=[];
+hp=100;
 show();
+
+});
+
+}
+
+
+
+if(room=="end"){
+
+title="Vítězství";
+
+img="🏆";
+
+text=`
+Stojíš před branami hradu.
+
+Poprvé po stovkách let se otevřelo nebe nad Varkhánem.
+
+Dokázal jsi prolomit kletbu.
+
+<br><br>
+
+<b>KONEC KAPITOLY 1</b>
+
+`;
+
+choice(
+"Hrát znovu",
+()=>{
+
+room="gate";
+inventory=[];
+hp=100;
+show();
+
+});
+
+}
+
+
+
+render(title,text,img);
+
+}
+
+
+show();
+
 
 </script>
 
 </body>
 </html>
-
->
