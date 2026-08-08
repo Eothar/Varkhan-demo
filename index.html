@@ -493,7 +493,436 @@ font-size:16px;
     linear-gradient(rgba(35,25,5,.2),rgba(5,4,2,.9)),
     radial-gradient(circle at 50% 45%,#80662c,#29200c 60%,#050402);
 }
+/* =========================
+   FANTASY SCÉNY
+   ========================= */
 
+.scene{
+    position:relative;
+    overflow:hidden;
+    background:#080a10;
+}
+
+
+/* ===== HRADNÍ BRÁNA ===== */
+
+.scene.gate{
+
+    background:
+
+    /* měsíc */
+    radial-gradient(
+        circle at 72% 25%,
+        rgba(235,225,190,.95) 0 28px,
+        rgba(235,225,190,.15) 29px,
+        transparent 80px
+    ),
+
+    /* obloha */
+    linear-gradient(
+        #111827 0%,
+        #1b1b27 45%,
+        #08090d 100%
+    );
+
+}
+
+
+/* hrad */
+
+.scene.gate::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:12%;
+    bottom:0;
+
+    width:76%;
+    height:68%;
+
+    background:
+
+    /* hlavní hrad */
+    linear-gradient(
+        90deg,
+        transparent 0 7%,
+        #08090c 7% 25%,
+        transparent 25% 29%,
+        #08090c 29% 71%,
+        transparent 71% 75%,
+        #08090c 75% 93%,
+        transparent 93%
+    );
+
+    clip-path:polygon(
+        0 100%,
+        0 35%,
+        12% 35%,
+        12% 0,
+        27% 0,
+        27% 35%,
+        73% 35%,
+        73% 0,
+        88% 0,
+        88% 35%,
+        100% 35%,
+        100% 100%
+    );
+
+    filter:drop-shadow(
+        0 10px 15px #000
+    );
+
+}
+
+
+/* hlavní věž / brána */
+
+.scene.gate::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:39%;
+    bottom:0;
+
+    width:22%;
+    height:50%;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #090a0d,
+        #15171c,
+        #07080b
+    );
+
+    clip-path:polygon(
+        0 100%,
+        0 25%,
+        50% 0,
+        100% 25%,
+        100% 100%
+    );
+
+    box-shadow:
+        inset 0 0 25px #000;
+
+}
+
+
+
+/* ===== HALA ===== */
+
+.scene.hall{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 38%,
+        rgba(255,170,70,.55),
+        transparent 18%
+    ),
+
+    linear-gradient(
+        #17130f,
+        #070706
+    );
+
+}
+
+
+/* ===== KNIHOVNA ===== */
+
+.scene.library{
+
+    background:
+
+    repeating-linear-gradient(
+        90deg,
+        #130f0b 0 12%,
+        #3b2818 13% 14%,
+        #130f0b 15% 25%
+    );
+
+}
+
+
+.scene.library::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:42%;
+    top:10%;
+
+    width:16%;
+    height:80%;
+
+    background:
+
+    repeating-linear-gradient(
+        0deg,
+        #9a713c 0 5px,
+        #3a2515 6px 15px
+    );
+
+    box-shadow:
+        0 0 30px rgba(255,170,60,.25);
+
+}
+
+
+/* ===== POKOJ ===== */
+
+.scene.room{
+
+    background:
+
+    radial-gradient(
+        circle at 30% 50%,
+        rgba(255,160,60,.45),
+        transparent 20%
+    ),
+
+    linear-gradient(
+        135deg,
+        #38291f,
+        #0b0807
+    );
+
+}
+
+
+.scene.room::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:18%;
+    bottom:15%;
+
+    width:64%;
+    height:30%;
+
+    background:#211711;
+
+    border:
+        2px solid #62462d;
+
+    box-shadow:
+        0 -30px 20px rgba(0,0,0,.5);
+
+}
+
+
+/* ===== SKLEPENÍ ===== */
+
+.scene.basement{
+
+    background:
+
+    radial-gradient(
+        ellipse at 50% 40%,
+        #3c464b,
+        #11161a 45%,
+        #020305 85%
+    );
+
+}
+
+
+.scene.basement::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    repeating-linear-gradient(
+        160deg,
+        transparent 0 35px,
+        rgba(0,0,0,.4) 36px 40px
+    );
+
+    opacity:.7;
+
+}
+
+
+/* ===== KATAKOMBY ===== */
+
+.scene.catacombs{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 45%,
+        rgba(70,150,170,.45),
+        transparent 25%
+    ),
+
+    linear-gradient(
+        #16252a,
+        #030507
+    );
+
+}
+
+
+.scene.catacombs::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:15%;
+    bottom:0;
+
+    width:70%;
+    height:55%;
+
+    background:
+
+    radial-gradient(
+        circle at 15% 70%,
+        #c7c2ae 0 10px,
+        transparent 11px
+    ),
+
+    radial-gradient(
+        circle at 35% 80%,
+        #aaa594 0 13px,
+        transparent 14px
+    ),
+
+    radial-gradient(
+        circle at 65% 75%,
+        #c1baa5 0 11px,
+        transparent 12px
+    ),
+
+    radial-gradient(
+        circle at 85% 85%,
+        #aaa594 0 12px,
+        transparent 13px
+    );
+
+    opacity:.7;
+
+}
+
+
+/* ===== STRÁŽCE ===== */
+
+.scene.guardian{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 45%,
+        rgba(170,40,40,.4),
+        transparent 20%
+    ),
+
+    linear-gradient(
+        #261012,
+        #050304
+    );
+
+}
+
+
+.scene.guardian::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:43%;
+    bottom:0;
+
+    width:14%;
+    height:75%;
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #09090b,
+        #3b3b42,
+        #08080a
+    );
+
+    clip-path:polygon(
+        50% 0,
+        70% 15%,
+        85% 40%,
+        100% 100%,
+        0 100%,
+        15% 40%,
+        30% 15%
+    );
+
+}
+
+
+/* ===== POKLADNICE ===== */
+
+.scene.treasure{
+
+    background:
+
+    radial-gradient(
+        circle at 50% 45%,
+        rgba(255,190,55,.75),
+        transparent 25%
+    ),
+
+    linear-gradient(
+        #3c2d0d,
+        #080703
+    );
+
+}
+
+
+.scene.treasure::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:38%;
+    bottom:15%;
+
+    width:24%;
+    height:30%;
+
+    background:
+
+    linear-gradient(
+        #c49328,
+        #60430d
+    );
+
+    border:
+        3px solid #d9ad45;
+
+    box-shadow:
+        0 0 35px rgba(255,190,50,.6);
+
+}
+    
 </style>
 
 </head>
