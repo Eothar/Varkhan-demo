@@ -446,7 +446,53 @@ font-size:16px;
 }
 
 }
+.scene.gate{
+    background:
+    linear-gradient(rgba(5,5,10,.35),rgba(5,5,10,.8)),
+    radial-gradient(circle at 50% 30%,#59606a,#151820 60%,#050509);
+}
 
+.scene.hall{
+    background:
+    linear-gradient(rgba(10,7,4,.3),rgba(5,4,3,.9)),
+    radial-gradient(circle at 50% 35%,#725633,#18120d 65%,#050505);
+}
+
+.scene.library{
+    background:
+    linear-gradient(rgba(20,15,8,.3),rgba(5,4,3,.9)),
+    radial-gradient(circle at 50% 40%,#59452e,#17130e 65%,#050505);
+}
+
+.scene.room{
+    background:
+    linear-gradient(rgba(15,10,7,.3),rgba(4,3,3,.9)),
+    radial-gradient(circle at 50% 40%,#514034,#16110d 65%,#050505);
+}
+
+.scene.basement{
+    background:
+    linear-gradient(rgba(5,8,12,.3),rgba(2,3,5,.95)),
+    radial-gradient(circle at 50% 45%,#39454b,#101419 60%,#020305);
+}
+
+.scene.catacombs{
+    background:
+    linear-gradient(rgba(5,10,14,.3),rgba(2,4,7,.95)),
+    radial-gradient(circle at 50% 45%,#344d55,#0b1418 60%,#020305);
+}
+
+.scene.guardian{
+    background:
+    linear-gradient(rgba(20,5,5,.25),rgba(4,2,3,.95)),
+    radial-gradient(circle at 50% 45%,#593333,#170b0d 60%,#030203);
+}
+
+.scene.treasure{
+    background:
+    linear-gradient(rgba(35,25,5,.2),rgba(5,4,2,.9)),
+    radial-gradient(circle at 50% 45%,#80662c,#29200c 60%,#050402);
+}
 
 </style>
 
@@ -457,7 +503,7 @@ font-size:16px;
 <div class="game">
 
 <header>
-<h1>🏰 Prokletý hrad Varkhán</h1>
+<h1> Prokletý hrad Varkhán</h1>
 </header>
 
 <div id="image" class="scene"></div>
@@ -533,13 +579,17 @@ document.getElementById("inventory").innerHTML=
 
 function render(title,text,img){
 
-document.getElementById("location").innerHTML=title;
+    document.getElementById("location").innerHTML = title;
 
-document.getElementById("story").innerHTML=text;
+    document.getElementById("story").innerHTML = text;
 
-document.getElementById("image").innerHTML=img;
+    const scene = document.getElementById("image");
 
-update();
+    scene.innerHTML = "";
+
+    scene.className = "scene " + img;
+
+    update();
 
 }
 
@@ -552,7 +602,7 @@ document.getElementById("choices").innerHTML="";
 
 let title="";
 let text="";
-let img="🏰";
+let img="gate";
 
 
 
@@ -580,7 +630,7 @@ if(room=="hall"){
 
 title="Vstupní hala";
 
-img="🕯️";
+img="hall";
 
 text=`
 Starý sál je pokrytý prachem.
@@ -598,7 +648,7 @@ add("🔑 Rezavý klíč");
 render(
 "Vstupní hala",
 "Ve schránce nacházíš rezavý klíč.",
-"🕯️"
+"hall"
 );
 
 });
@@ -620,7 +670,7 @@ if(room=="library"){
 
 title="Knihovna";
 
-img="📚";
+img="library";
 
 text=`
 Mezi tisíci knihami najdeš starý svitek.
@@ -638,7 +688,7 @@ add("📜 Svitek");
 render(
 "Knihovna",
 "Získal jsi starý svitek.",
-"📚"
+"library"
 );
 
 });
@@ -653,7 +703,7 @@ if(room=="room"){
 
 title="Starý pokoj";
 
-img="🛏️";
+img="room";
 
 text=`
 Na stole leží stará pochodeň.
@@ -669,7 +719,7 @@ add("🔥 Pochodeň");
 render(
 "Starý pokoj",
 "Získal jsi pochodeň.",
-"🛏️"
+"room"
 );
 
 });
@@ -682,7 +732,7 @@ if(room=="door"){
 
 title="Kamenné dveře do sklepení";
 
-img="⛓️";
+img="door";
 
 text=`
 Před tebou jsou obrovské kamenné dveře.
@@ -717,7 +767,7 @@ if(room=="basement"){
 
 title="Staré sklepení";
 
-img="⛓️";
+img="basement";
 
 text=`
 Scházíš hluboko pod hrad.
@@ -755,7 +805,7 @@ if(room=="catacombs"){
 
 title="Katakomby";
 
-img="💀";
+img="catacombs";
 
 text=`
 Pod hradem se nachází staré katakomby.
@@ -776,7 +826,7 @@ if(room=="guardian"){
 
 title="Strážce hradu";
 
-img="⚔️";
+img="guardian";
 
 text=`
 Rytíř zvedne svůj meč.
@@ -811,7 +861,7 @@ if(room=="treasure"){
 
 title="Pokladnice";
 
-img="💎";
+img="treasure";
 
 text=`
 Za strážcem nacházíš starou komnatu.
@@ -842,7 +892,7 @@ if(room=="dead"){
 
 title="Konec";
 
-img="☠️";
+img="dead";
 
 text=`
 Strážce byl příliš silný.
@@ -870,7 +920,7 @@ if(room=="end"){
 
 title="Vítězství";
 
-img="🏆";
+img="end";
 
 text=`
 Stojíš před branami hradu.
